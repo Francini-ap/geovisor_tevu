@@ -1,0 +1,1141 @@
+---
+title: "Proyecto TEVU"
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+    social: menu
+    source: embed
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+# Cargar librerias
+
+#Paquete para manipulación de datos
+library(plyr)
+
+#Paquete para tablero de control al interactivos
+library(flexdashboard)
+
+# Paquete para manipulación de datos
+library(dplyr)
+
+# Paquete para manejo de datos vectoriales
+library(sf)
+
+# Paquete para mapas interactivos
+library(leaflet)
+
+#Paquete para manejo de tablas
+library(DT)
+
+library(leaflet.extras)
+#Paquete coordenadas mapa
+library(leafem)
+# Paquete para manipulación de datos
+
+# Paquete para simplificación y edición de geometrías
+library(rmapshaper)
+
+# Paquetes con datos geoespaciales para ejemplos
+library(spData)
+
+# Paquetes para gestión de colores
+library(RColorBrewer)
+
+library(shiny)
+library(sp)
+
+
+library(htmlwidgets)
+library( mapview )
+
+# Make some noisily increasing data
+set.seed(955)
+dat <- data.frame(cond = rep(c("A", "B"), each=10),
+                  xvar = 1:20 + rnorm(20,sd=3),
+                  yvar = 1:20 + rnorm(20,sd=3))
+```
+
+```{r datos}
+
+# Lectura de una capa vectorial (GeoJSON) Proyecto locales Unidos
+ proyectos_unidos_v2 <-
+  st_read(
+    "https://francini-ap.github.io/capas_visor_tfg_2022/proyectos_pnud7.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Intervenciones Territoriales TEVU
+ intervencion_tevu <-
+  st_read(
+    "https://francini-ap.github.io/datos_intervencion_tevu/intervencion_tevu_2.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Cantones TEVU
+cantones_tevu<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/cantones_tevu.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto ma-01-22
+punto_ma_01<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/ma-01-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto ma-02-22
+punto_ma_02<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/ma-02-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto ma-03-22
+punto_ma_03<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/ma-03-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto ma-04-22
+punto_ma_04<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/ma-04-22.geojson",
+    quiet = TRUE
+  )
+
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-01-22
+punto_re_01<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-01-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-02-22
+punto_re_02<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-02-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-03-22
+punto_re_03<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-03-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-04-22
+punto_re_04<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-04-22.geojson",
+    quiet = TRUE
+  )
+
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-05-22
+punto_re_05<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-05-22.geojson",
+    quiet = TRUE
+  )
+
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-06-22
+punto_re_06<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-06-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-07-22
+punto_re_07<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-07-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-08-22
+punto_re_08<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-08-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-09-22
+punto_re_09<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-09-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-10-22
+punto_re_10<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-10-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-11-22
+punto_re_11<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-11-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Intervención 2023
+inter_2023<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/intervenciones_2023.geojson",
+    quiet = TRUE
+  )
+
+
+```
+
+### Se presentan las acciones realizadas en el territorio durante el año 2022, proyecto TEVU
+
+```{r}
+map <-
+leaflet() %>%
+  setView(lng = -84.10,
+            lat = 9.9,
+            zoom = 10) %>%
+  addTiles(group = "OSM (default)") %>%
+  addProviderTiles(providers$CartoDB.Positron, group = "Carto BD")%>%
+  addProviderTiles(providers$Esri.WorldImagery, group = "Esri World Imagery") %>%
+  addTiles() %>%
+# Overlay groups
+  
+addCircleMarkers (
+    data = inter_2023,
+    group = "Alcance geográfico:TEVU para 2023",
+    color = "#ff6600",
+    fillColor = "#ff6600",
+    stroke = TRUE,
+    weight = 1.0,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        inter_2023$tipo_inter,
+        ", ",
+        inter_2023$canton,
+        ", ",
+        inter_2023$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       inter_2023$tipo_inter,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        inter_2023$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        inter_2023$ano
+      )
+    
+    ) %>%
+  
+   addPolygons (
+     data = cantones_tevu,
+    group = "Cantones TEVU",
+    color = "#010b0d",
+    fillColor = "#2daebc",
+    stroke = TRUE,
+    weight = 1.0,
+    opacity = 0.80,
+    fillOpacity = 0.6,
+    label = paste0(
+        cantones_tevu$nom_cant
+    ),
+    popup = paste0(
+        "<div style=text-align:center><h3>Información </div>",
+        "<strong>Provincia: </strong>",
+        cantones_tevu$nom_prov,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        cantones_tevu$nom_cant
+        
+        
+    )
+
+ ) %>%
+  
+  addCircleMarkers (
+    data = punto_ma_01,
+    group = "Alcance geográfico:TEVU",
+    color = "#4019c5",
+    fillColor = "#4019c5",
+    stroke = TRUE,
+    weight = 1.0,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_ma_01$tipo_inter,
+        ", ",
+       punto_ma_01$impac_terr,
+        ", ",
+        punto_ma_01$canton,
+        ", ",
+        punto_ma_01$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_ma_01$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_ma_01$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_ma_01$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_ma_01$ano,
+        "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/ma-01-22.jpg",  " width = 160>"
+      )
+    
+    ) %>%
+  
+addCircleMarkers (
+    data = punto_ma_02,
+    group = "Alcance geográfico:TEVU",
+    color = "#4019c5",
+    fillColor = "#4019c5",
+    stroke = TRUE,
+    weight = 1.0,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_ma_02$tipo_inter,
+        ", ",
+       punto_ma_02$impac_terr,
+        ", ",
+        punto_ma_02$canton,
+        ", ",
+        punto_ma_02$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_ma_02$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_ma_02$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_ma_02$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_ma_02$ano,
+        "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/ma-02-22.jpg",  " width = 160>"
+      )
+    
+    ) %>%
+addCircleMarkers (
+    data = punto_ma_03,
+    group = "Alcance geográfico:TEVU",
+    color = "#4019c5",
+    fillColor = "#4019c5",
+    stroke = TRUE,
+    weight = 1.0,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_ma_03$tipo_inter,
+        ", ",
+       punto_ma_03$impac_terr,
+        ", ",
+        punto_ma_03$canton,
+        ", ",
+        punto_ma_03$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_ma_03$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_ma_03$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_ma_03$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_ma_03$ano,
+        "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/ma-03-22.jpg",  " width = 160>"
+      )
+    
+    ) %>%
+addCircleMarkers (
+    data = punto_ma_04,
+    group = "Alcance geográfico:TEVU",
+    color = "#4019c5",
+    fillColor = "#4019c5",
+    stroke = TRUE,
+    weight = 1.0,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_ma_04$tipo_inter,
+        ", ",
+       punto_ma_04$impac_terr,
+        ", ",
+        punto_ma_04$canton,
+        ", ",
+        punto_ma_04$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_ma_04$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_ma_04$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_ma_04$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_ma_04$ano,
+        "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/ma-04-22.jpg",  " width = 160>"
+      )
+    
+    ) %>%
+addCircleMarkers (
+    data = punto_re_01,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_01$tipo_inter,
+        ", ",
+       punto_re_01$impac_terr,
+        ", ",
+        punto_re_01$canton,
+        ", ",
+        punto_re_01$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_01$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_01$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_01$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_01$ano,
+        "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-01-22.jpg",  " width = 160>"
+      )
+    
+    ) %>%
+
+  addCircleMarkers (
+    data = punto_re_02,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_02$tipo_inter,
+        ", ",
+       punto_re_02$impac_terr,
+        ", ",
+        punto_re_01$canton,
+        ", ",
+        punto_re_02$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_02$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_02$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_02$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_02$ano,
+        "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-02-22.jpg",  " width = 160>"
+      )
+    
+    ) %>%
+addCircleMarkers (
+    data = punto_re_03,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_03$tipo_inter,
+        ", ",
+       punto_re_03$impac_terr,
+        ", ",
+        punto_re_03$canton,
+        ", ",
+        punto_re_03$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_03$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_03$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_03$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_03$ano,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-03-22.jpg",  " width = 160>"
+       
+      )
+    
+    ) %>%
+
+  addCircleMarkers (
+    data = punto_re_04,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_04$tipo_inter,
+        ", ",
+       punto_re_04$impac_terr,
+        ", ",
+        punto_re_04$canton,
+        ", ",
+        punto_re_04$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_04$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_04$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_04$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_04$ano,
+        "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-04-22.jpg",  " width = 160>"
+      )
+    
+    ) %>%
+addCircleMarkers (
+    data = punto_re_04,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_04$tipo_inter,
+        ", ",
+       punto_re_04$impac_terr,
+        ", ",
+        punto_re_04$canton,
+        ", ",
+        punto_re_04$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_04$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_04$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_04$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_04$ano,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-04-22.jpg",  " width = 160>"
+       
+      )
+    
+    ) %>%
+
+ addCircleMarkers (
+    data = punto_re_04,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_04$tipo_inter,
+        ", ",
+       punto_re_04$impac_terr,
+        ", ",
+        punto_re_04$canton,
+        ", ",
+        punto_re_04$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_04$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_04$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_04$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_04$ano,
+        "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-04-22.jpg",  " width = 160>"
+      )
+    
+    ) %>%
+addCircleMarkers (
+    data = punto_re_05,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_05$tipo_inter,
+        ", ",
+       punto_re_05$impac_terr,
+        ", ",
+        punto_re_05$canton,
+        ", ",
+        punto_re_05$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_05$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_05$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_05$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_05$ano,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-05-22.jpg",  " width = 160>"
+       
+      )
+    
+    ) %>% 
+  
+  
+  addCircleMarkers (
+    data = punto_re_04,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_04$tipo_inter,
+        ", ",
+       punto_re_04$impac_terr,
+        ", ",
+        punto_re_04$canton,
+        ", ",
+        punto_re_04$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_04$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_04$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_04$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_04$ano,
+        "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-04-22.jpg",  " width = 160>"
+      )
+    
+    ) %>%
+addCircleMarkers (
+    data = punto_re_06,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_06$tipo_inter,
+        ", ",
+       punto_re_06$impac_terr,
+        ", ",
+        punto_re_06$canton,
+        ", ",
+        punto_re_06$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_06$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_06$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_06$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_06$ano,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-06-22.jpg",  " width = 160>"
+       
+      )
+    
+    ) %>%
+
+ addCircleMarkers (
+    data = punto_re_07,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_07$tipo_inter,
+        ", ",
+       punto_re_07$impac_terr,
+        ", ",
+        punto_re_07$canton,
+        ", ",
+        punto_re_07$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_07$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_07$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_07$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_07$ano,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-07-22.jpg",  " width = 160>"
+       
+      )
+    
+    ) %>% 
+  
+addCircleMarkers (
+    data = punto_re_08,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_08$tipo_inter,
+        ", ",
+       punto_re_08$impac_terr,
+        ", ",
+        punto_re_08$canton,
+        ", ",
+        punto_re_08$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_08$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_08$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_08$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_08$ano,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-08-22.jpg",  " width = 160>"
+       
+      )
+    
+    ) %>%
+  
+  
+  addCircleMarkers (
+    data = punto_re_09,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_09$tipo_inter,
+        ", ",
+       punto_re_09$impac_terr,
+        ", ",
+        punto_re_09$canton,
+        ", ",
+        punto_re_09$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_09$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_09$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_09$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_09$ano,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-09-22.jpg",  " width = 160>"
+       
+      )
+    
+    ) %>%
+  
+   addCircleMarkers (
+    data = punto_re_10,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_10$tipo_inter,
+        ", ",
+       punto_re_10$impac_terr,
+        ", ",
+        punto_re_10$canton,
+        ", ",
+        punto_re_10$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_10$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_10$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_10$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_10$ano
+       
+      )
+    
+    ) %>%
+  
+   addCircleMarkers (
+    data = punto_re_11,
+    group = "Alcance geográfico:TEVU",
+    color = "#1a7827",
+    fillColor = "#1a7827",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        punto_re_11$tipo_inter,
+        ", ",
+       punto_re_11$impac_terr,
+        ", ",
+        punto_re_11$canton,
+        ", ",
+        punto_re_11$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_11$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_11$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_11$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_11$ano
+       
+      )
+    
+    ) %>%
+      
+ addLayersControl(
+   baseGroups = c("OSM", "Esri World Imagery"), 
+   overlayGroups = c("Cantones TEVU", "Alcance geográfico:TEVU para 2023"),
+   options = layersControlOptions(collapsed = TRUE,  autoZIndex = FALSE))%>% 
+
+ addScaleBar(position = "bottomleft",
+                options = scaleBarOptions(imperial = FALSE)) %>%
+    addMouseCoordinates() %>%
+    addSearchOSM() %>%
+    addResetMapButton()
+
+map %>% hideGroup ("Alcance geográfico:TEVU para 2023")
+```
+
+***
+
+<div>
+<p style = 'text-align:center;'>
+</p>
+</p>
+</p>
+</p>
+</p>
+</p>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="250px">
+</p>
+</div>
+
+### Resumen de los principales resultados de las acciones realizadas en el territorio durante el año 2022, proyecto TEVU
+
+<div>
+<p style = 'text-align:center;'>
+</p>
+</p>
+</p>
+</p>
+</p>
+</p>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/inter_2022.jpg" alt="JuveYell" width="900px"height="450px">
+</p>
+</div>
+
+
+***
+
+<div>
+<p style = 'text-align:center;'>
+</p>
+</p>
+</p>
+</p>
+</p>
+</p>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="250px">
+</p>
+</div>
+
+
+
+###  Acciones que se realizaran en el territorio para el año 2023, proyecto TEVU
+
+```{r}
+
+leaflet() %>%
+  setView(lng = -84.10,
+            lat = 9.9,
+            zoom = 10) %>%
+  addTiles(group = "OSM (default)") %>%
+  addProviderTiles(providers$CartoDB.Positron, group = "Carto BD")%>%
+  addProviderTiles(providers$Esri.WorldImagery, group = "Esri World Imagery") %>%
+  addTiles() %>%
+# Overlay groups
+  
+addCircleMarkers (
+    data = inter_2023,
+    group = "Alcance geográfico:TEVU para 2023",
+    color = "#ff6600",
+    fillColor = "#ff6600",
+    stroke = TRUE,
+    weight = 1.0,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+        inter_2023$tipo_inter,
+        ", ",
+        inter_2023$canton,
+        ", ",
+        inter_2023$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Tipo intervención: </strong>",
+       inter_2023$tipo_inter,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        inter_2023$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        inter_2023$ano
+      )
+    
+    ) %>%
+  
+   addPolygons (
+     data = cantones_tevu,
+    group = "Cantones TEVU",
+    color = "#010b0d",
+    fillColor = "#2daebc",
+    stroke = TRUE,
+    weight = 1.0,
+    opacity = 0.80,
+    fillOpacity = 0.6,
+    label = paste0(
+        cantones_tevu$nom_cant
+    ),
+    popup = paste0(
+        "<div style=text-align:center><h3>Información </div>",
+        "<strong>Provincia: </strong>",
+        cantones_tevu$nom_prov,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        cantones_tevu$nom_cant
+        
+        
+    )
+
+ ) %>%
+  
+    
+ addLayersControl(
+   baseGroups = c("OSM", "Esri World Imagery"), 
+   overlayGroups = c("Alcance geográfico:TEVU para 2023", "Cantones TEVU" ),
+   options = layersControlOptions(collapsed = TRUE,  autoZIndex = FALSE))%>% 
+
+ addScaleBar(position = "bottomleft",
+                options = scaleBarOptions(imperial = FALSE)) %>%
+    addMouseCoordinates() %>%
+    addSearchOSM() %>%
+    addResetMapButton()
+
+
+```
+
+***
+
+<div>
+<p style = 'text-align:center;'>
+</p>
+</p>
+</p>
+</p>
+</p>
+</p>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="250px">
+</p>
+</div>
+
+
+### Proyección de las acciones en el territorio para el año 2023, proyecto TEVU
+
+<div>
+<p style = 'text-align:center;'>
+</p>
+</p>
+</p>
+</p>
+</p>
+</p>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/inter_2023.jpg" alt="JuveYell" width="900px"height="450px">
+</p>
+</div>
+***
+
+<div>
+<p style = 'text-align:center;'>
+</p>
+</p>
+</p>
+</p>
+</p>
+</p>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="250px">
+</p>
+</div>
+
+
