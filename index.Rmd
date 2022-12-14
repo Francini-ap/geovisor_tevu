@@ -5,6 +5,7 @@ output:
     storyboard: true
     social: menu
     source: embed
+  runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
@@ -188,6 +189,20 @@ punto_re_11<-
     quiet = TRUE
   )
 
+# Lectura de una capa vectorial (GeoJSON) Punto re-12-22
+punto_re_12<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-12-22.geojson",
+    quiet = TRUE
+  )
+
+# Lectura de una capa vectorial (GeoJSON) Punto re-13-22
+punto_re_13<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/re-13-22.geojson",
+    quiet = TRUE
+  )
+
 # Lectura de una capa vectorial (GeoJSON) Intervención 2023
 inter_2023<-
   st_read(
@@ -195,6 +210,12 @@ inter_2023<-
     quiet = TRUE
   )
 
+# Lectura de una capa vectorial (GeoJSON) Conteo Aves
+conteo_aves<-
+  st_read(
+    "https://francini-ap.github.io/datos_impactos_territorio_tevu/puntos-geo/puntos_contes_aves_2022.geojson",
+    quiet = TRUE
+  )
 
 ```
 
@@ -206,10 +227,9 @@ leaflet() %>%
   setView(lng = -84.10,
             lat = 9.9,
             zoom = 10) %>%
-  addTiles(group = "OSM (default)") %>%
-  addProviderTiles(providers$CartoDB.Positron, group = "Carto BD")%>%
-  addProviderTiles(providers$Esri.WorldImagery, group = "Esri World Imagery") %>%
-  addTiles() %>%
+  
+  addProviderTiles(providers$Esri.WorldImagery)%>%
+
 # Overlay groups
   
 addCircleMarkers (
@@ -246,8 +266,8 @@ addCircleMarkers (
    addPolygons (
      data = cantones_tevu,
     group = "Cantones TEVU",
-    color = "#010b0d",
-    fillColor = "#2daebc",
+   color = "#120707",
+    fillColor = "#808080",
     stroke = TRUE,
     weight = 1.0,
     opacity = 0.80,
@@ -271,13 +291,15 @@ addCircleMarkers (
   addCircleMarkers (
     data = punto_ma_01,
     group = "Alcance geográfico:TEVU",
-    color = "#4019c5",
-    fillColor = "#4019c5",
+    color = "#ab1aab",
+    fillColor = "#ab1aab",
     stroke = TRUE,
     weight = 1.0,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+        punto_ma_01$Nombre,
+        ", ",
         punto_ma_01$tipo_inter,
         ", ",
        punto_ma_01$impac_terr,
@@ -289,6 +311,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_ma_01$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_ma_01$tipo_inter,
         "<br>",
@@ -309,13 +334,15 @@ addCircleMarkers (
 addCircleMarkers (
     data = punto_ma_02,
     group = "Alcance geográfico:TEVU",
-    color = "#4019c5",
-    fillColor = "#4019c5",
+    color = "#0c497d",
+    fillColor = "#0c497d",
     stroke = TRUE,
     weight = 1.0,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+         punto_ma_02$Nombre,
+         ", ",
         punto_ma_02$tipo_inter,
         ", ",
        punto_ma_02$impac_terr,
@@ -327,6 +354,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_ma_02$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_ma_02$tipo_inter,
         "<br>",
@@ -346,13 +376,15 @@ addCircleMarkers (
 addCircleMarkers (
     data = punto_ma_03,
     group = "Alcance geográfico:TEVU",
-    color = "#4019c5",
-    fillColor = "#4019c5",
+    color = "#ab1aab",
+    fillColor = "#ab1aab",
     stroke = TRUE,
     weight = 1.0,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+        punto_ma_03$Nombre,
+         ", ",
         punto_ma_03$tipo_inter,
         ", ",
        punto_ma_03$impac_terr,
@@ -364,6 +396,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_ma_03$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_ma_03$tipo_inter,
         "<br>",
@@ -383,13 +418,15 @@ addCircleMarkers (
 addCircleMarkers (
     data = punto_ma_04,
     group = "Alcance geográfico:TEVU",
-    color = "#4019c5",
-    fillColor = "#4019c5",
+    color = "#ab1aab",
+    fillColor = "#ab1aab",
     stroke = TRUE,
     weight = 1.0,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+        punto_ma_04$Nombre,
+         ", ",
         punto_ma_04$tipo_inter,
         ", ",
        punto_ma_04$impac_terr,
@@ -401,6 +438,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_ma_04$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_ma_04$tipo_inter,
         "<br>",
@@ -420,13 +460,15 @@ addCircleMarkers (
 addCircleMarkers (
     data = punto_re_01,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+        punto_re_01$Nombre,
+         ", ",
         punto_re_01$tipo_inter,
         ", ",
        punto_re_01$impac_terr,
@@ -438,6 +480,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_01$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_01$tipo_inter,
         "<br>",
@@ -458,16 +503,18 @@ addCircleMarkers (
   addCircleMarkers (
     data = punto_re_02,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+        punto_re_02$Nombre,
+         ", ",
         punto_re_02$tipo_inter,
         ", ",
-       punto_re_02$impac_terr,
+        punto_re_02$impac_terr,
         ", ",
         punto_re_01$canton,
         ", ",
@@ -476,6 +523,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_02$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_02$tipo_inter,
         "<br>",
@@ -495,13 +545,15 @@ addCircleMarkers (
 addCircleMarkers (
     data = punto_re_03,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+       punto_re_03$Nombre,
+         ", ",
         punto_re_03$tipo_inter,
         ", ",
        punto_re_03$impac_terr,
@@ -513,6 +565,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_03$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_03$tipo_inter,
         "<br>",
@@ -534,13 +589,16 @@ addCircleMarkers (
   addCircleMarkers (
     data = punto_re_04,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+      
+        punto_re_04$Nombre,
+         ", ",
         punto_re_04$tipo_inter,
         ", ",
        punto_re_04$impac_terr,
@@ -552,6 +610,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_04$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_04$tipo_inter,
         "<br>",
@@ -565,95 +626,23 @@ addCircleMarkers (
         punto_re_04$ano,
         "<br>",
        "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-04-22.jpg",  " width = 160>"
-      )
-    
-    ) %>%
-addCircleMarkers (
-    data = punto_re_04,
-    group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
-    stroke = TRUE,
-    weight = 0.8,
-    opacity = 0.10,
-    fillOpacity = 0.8,
-    label = paste0(
-        punto_re_04$tipo_inter,
-        ", ",
-       punto_re_04$impac_terr,
-        ", ",
-        punto_re_04$canton,
-        ", ",
-        punto_re_04$ano
-       
-      ),
-            popup = paste0(
-        "<div style=text-align:center><h3>Alcance geográfico </div>",
-        "<strong>Tipo intervención: </strong>",
-       punto_re_04$tipo_inter,
-        "<br>",
-        "<strong>Espacio intervenido: </strong>",
-        punto_re_04$impac_terr,
-        "<br>",
-        "<strong>Cantón: </strong>",
-        punto_re_04$canton,
-        "<br>",
-        "<strong>Año: </strong>",
-        punto_re_04$ano,
-       "<br>",
-       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-04-22.jpg",  " width = 160>"
-       
       )
     
     ) %>%
 
- addCircleMarkers (
-    data = punto_re_04,
-    group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
-    stroke = TRUE,
-    weight = 0.8,
-    opacity = 0.10,
-    fillOpacity = 0.8,
-    label = paste0(
-        punto_re_04$tipo_inter,
-        ", ",
-       punto_re_04$impac_terr,
-        ", ",
-        punto_re_04$canton,
-        ", ",
-        punto_re_04$ano
-       
-      ),
-            popup = paste0(
-        "<div style=text-align:center><h3>Alcance geográfico </div>",
-        "<strong>Tipo intervención: </strong>",
-       punto_re_04$tipo_inter,
-        "<br>",
-        "<strong>Espacio intervenido: </strong>",
-        punto_re_04$impac_terr,
-        "<br>",
-        "<strong>Cantón: </strong>",
-        punto_re_04$canton,
-        "<br>",
-        "<strong>Año: </strong>",
-        punto_re_04$ano,
-        "<br>",
-       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-04-22.jpg",  " width = 160>"
-      )
-    
-    ) %>%
+
 addCircleMarkers (
     data = punto_re_05,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+        punto_re_05$Nombre,
+         ", ",
         punto_re_05$tipo_inter,
         ", ",
        punto_re_05$impac_terr,
@@ -665,6 +654,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_05$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_05$tipo_inter,
         "<br>",
@@ -684,53 +676,18 @@ addCircleMarkers (
     ) %>% 
   
   
-  addCircleMarkers (
-    data = punto_re_04,
-    group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
-    stroke = TRUE,
-    weight = 0.8,
-    opacity = 0.10,
-    fillOpacity = 0.8,
-    label = paste0(
-        punto_re_04$tipo_inter,
-        ", ",
-       punto_re_04$impac_terr,
-        ", ",
-        punto_re_04$canton,
-        ", ",
-        punto_re_04$ano
-       
-      ),
-            popup = paste0(
-        "<div style=text-align:center><h3>Alcance geográfico </div>",
-        "<strong>Tipo intervención: </strong>",
-       punto_re_04$tipo_inter,
-        "<br>",
-        "<strong>Espacio intervenido: </strong>",
-        punto_re_04$impac_terr,
-        "<br>",
-        "<strong>Cantón: </strong>",
-        punto_re_04$canton,
-        "<br>",
-        "<strong>Año: </strong>",
-        punto_re_04$ano,
-        "<br>",
-       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-04-22.jpg",  " width = 160>"
-      )
-    
-    ) %>%
 addCircleMarkers (
     data = punto_re_06,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+   color = "#1aab9f",
+    fillColor = "#1aab9f",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+        punto_re_06$Nombre,
+         ", ",
         punto_re_06$tipo_inter,
         ", ",
        punto_re_06$impac_terr,
@@ -742,6 +699,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_06$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_06$tipo_inter,
         "<br>",
@@ -754,7 +714,7 @@ addCircleMarkers (
         "<strong>Año: </strong>",
         punto_re_06$ano,
        "<br>",
-       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-06-22.jpg",  " width = 160>"
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-06-22.jpeg",  " width = 160>"
        
       )
     
@@ -763,13 +723,15 @@ addCircleMarkers (
  addCircleMarkers (
     data = punto_re_07,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+       punto_re_07$Nombre,
+         ", ",
         punto_re_07$tipo_inter,
         ", ",
        punto_re_07$impac_terr,
@@ -781,6 +743,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_07$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_07$tipo_inter,
         "<br>",
@@ -793,7 +758,7 @@ addCircleMarkers (
         "<strong>Año: </strong>",
         punto_re_07$ano,
        "<br>",
-       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-07-22.jpg",  " width = 160>"
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-07-22.jpeg",  " width = 160>"
        
       )
     
@@ -802,13 +767,15 @@ addCircleMarkers (
 addCircleMarkers (
     data = punto_re_08,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+       punto_re_08$Nombre,
+         ", ",
         punto_re_08$tipo_inter,
         ", ",
        punto_re_08$impac_terr,
@@ -820,6 +787,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_08$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_08$tipo_inter,
         "<br>",
@@ -832,7 +802,7 @@ addCircleMarkers (
         "<strong>Año: </strong>",
         punto_re_08$ano,
        "<br>",
-       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-08-22.jpg",  " width = 160>"
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-08-22.jpeg",  " width = 160>"
        
       )
     
@@ -842,13 +812,15 @@ addCircleMarkers (
   addCircleMarkers (
     data = punto_re_09,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+       punto_re_09$Nombre,
+         ", ",
         punto_re_09$tipo_inter,
         ", ",
        punto_re_09$impac_terr,
@@ -860,6 +832,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_09$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_09$tipo_inter,
         "<br>",
@@ -872,7 +847,7 @@ addCircleMarkers (
         "<strong>Año: </strong>",
         punto_re_09$ano,
        "<br>",
-       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-09-22.jpg",  " width = 160>"
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-09-22.jpeg",  " width = 160>"
        
       )
     
@@ -881,13 +856,15 @@ addCircleMarkers (
    addCircleMarkers (
     data = punto_re_10,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#ab1aab",
+    fillColor = "#ab1aab",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+       punto_re_10$Nombre,
+         ", ",
         punto_re_10$tipo_inter,
         ", ",
        punto_re_10$impac_terr,
@@ -899,6 +876,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_10$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_10$tipo_inter,
         "<br>",
@@ -918,13 +898,15 @@ addCircleMarkers (
    addCircleMarkers (
     data = punto_re_11,
     group = "Alcance geográfico:TEVU",
-    color = "#1a7827",
-    fillColor = "#1a7827",
+    color = "#ab1aab",
+    fillColor = "#ab1aab",
     stroke = TRUE,
     weight = 0.8,
     opacity = 0.10,
     fillOpacity = 0.8,
     label = paste0(
+      punto_re_11$Nombre,
+         ", ",
         punto_re_11$tipo_inter,
         ", ",
        punto_re_11$impac_terr,
@@ -936,6 +918,9 @@ addCircleMarkers (
       ),
             popup = paste0(
         "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_11$Nombre,
+        "<br>",
         "<strong>Tipo intervención: </strong>",
        punto_re_11$tipo_inter,
         "<br>",
@@ -951,19 +936,142 @@ addCircleMarkers (
       )
     
     ) %>%
+  
+  
+   addCircleMarkers (
+    data = punto_re_12,
+    group = "Alcance geográfico:TEVU",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+      punto_re_12$Nombre,
+         ", ",
+        punto_re_12$tipo_inter,
+        ", ",
+       punto_re_12$impac_terr,
+        ", ",
+        punto_re_12$canton,
+        ", ",
+        punto_re_12$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_12$Nombre,
+        "<br>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_12$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_12$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_12$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_12$ano,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-12-22.jpeg",  " width = 160>"
+       
+      )
+    
+    ) %>%
+      
+      
+  addCircleMarkers (
+    data = punto_re_13,
+    group = "Alcance geográfico:TEVU",
+    color = "#1aab9f",
+    fillColor = "#1aab9f",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+      punto_re_13$Nombre,
+         ", ",
+        punto_re_13$tipo_inter,
+        ", ",
+       punto_re_13$impac_terr,
+        ", ",
+        punto_re_13$canton,
+        ", ",
+        punto_re_12$ano
+       
+      ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre: </strong>",
+         punto_re_13$Nombre,
+        "<br>",
+        "<strong>Tipo intervención: </strong>",
+       punto_re_13$tipo_inter,
+        "<br>",
+        "<strong>Espacio intervenido: </strong>",
+        punto_re_13$impac_terr,
+        "<br>",
+        "<strong>Cantón: </strong>",
+        punto_re_12$canton,
+        "<br>",
+        "<strong>Año: </strong>",
+        punto_re_13$ano,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/re-13-22.jpeg",  " width = 160>"
+       
+      )
+    
+    ) %>%
+  
+  
+      
+  addCircleMarkers (
+    data = conteo_aves,
+    group = "Puntos conteo aves",
+    color = "#1ad61a",
+    fillColor = "#1ad61a",
+    stroke = TRUE,
+    weight = 0.8,
+    opacity = 0.10,
+    fillOpacity = 0.8,
+    label = paste0(
+     conteo_aves$punto,
+         ", ",
+         conteo_aves$CBI
+         ),
+            popup = paste0(
+        "<div style=text-align:center><h3>Alcance geográfico </div>",
+        "<strong>Nombre sitio: </strong>",
+         conteo_aves$punto,
+        "<br>",
+        "<strong>Nombre CBI : </strong>",
+       conteo_aves$CBI,
+       "<br>",
+       "<img src = https://francini-ap.github.io/datos_impactos_territorio_tevu/fotos/conteo_aves.jpg",  " width = 160>"
+       
+      )
+    
+    ) %>%
       
  addLayersControl(
-   baseGroups = c("OSM", "Esri World Imagery"), 
-   overlayGroups = c("Cantones TEVU", "Alcance geográfico:TEVU para 2023"),
+   baseGroups = c("Esri World Imagery","OSM"), 
+   overlayGroups = c("Cantones TEVU", "Alcance geográfico:TEVU para 2023","Puntos conteo aves"),
    options = layersControlOptions(collapsed = TRUE,  autoZIndex = FALSE))%>% 
 
  addScaleBar(position = "bottomleft",
                 options = scaleBarOptions(imperial = FALSE)) %>%
     addMouseCoordinates() %>%
-    addSearchOSM() %>%
+    
     addResetMapButton()
 
-map %>% hideGroup ("Alcance geográfico:TEVU para 2023")
+map %>% hideGroup ("Alcance geográfico:TEVU para 2023")%>% 
+        hideGroup ("Puntos conteo aves")
+
+
 ```
 
 ***
@@ -1019,10 +1127,7 @@ leaflet() %>%
   setView(lng = -84.10,
             lat = 9.9,
             zoom = 10) %>%
-  addTiles(group = "OSM (default)") %>%
-  addProviderTiles(providers$CartoDB.Positron, group = "Carto BD")%>%
-  addProviderTiles(providers$Esri.WorldImagery, group = "Esri World Imagery") %>%
-  addTiles() %>%
+ addProviderTiles(providers$Esri.WorldImagery)%>%
 # Overlay groups
   
 addCircleMarkers (
@@ -1059,8 +1164,8 @@ addCircleMarkers (
    addPolygons (
      data = cantones_tevu,
     group = "Cantones TEVU",
-    color = "#010b0d",
-    fillColor = "#2daebc",
+    color = "#120707",
+    fillColor = "#808080",
     stroke = TRUE,
     weight = 1.0,
     opacity = 0.80,
@@ -1083,14 +1188,13 @@ addCircleMarkers (
   
     
  addLayersControl(
-   baseGroups = c("OSM", "Esri World Imagery"), 
+   baseGroups = c("Esri World Imagery"), 
    overlayGroups = c("Alcance geográfico:TEVU para 2023", "Cantones TEVU" ),
    options = layersControlOptions(collapsed = TRUE,  autoZIndex = FALSE))%>% 
 
  addScaleBar(position = "bottomleft",
                 options = scaleBarOptions(imperial = FALSE)) %>%
     addMouseCoordinates() %>%
-    addSearchOSM() %>%
     addResetMapButton()
 
 
