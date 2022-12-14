@@ -1076,15 +1076,14 @@ map %>% hideGroup ("Alcance geográfico:TEVU para 2023")%>%
 
 ***
 
+
 <div>
 <p style = 'text-align:center;'>
-</p>
-</p>
-</p>
-</p>
-</p>
-</p>
-<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="250px">
+<br>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/tipo_inter.JPG" alt="JuveYell" width="300px">
+<br>
+<br>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="200px">
 </p>
 </div>
 
@@ -1098,7 +1097,7 @@ map %>% hideGroup ("Alcance geográfico:TEVU para 2023")%>%
 </p>
 </p>
 </p>
-<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/inter_2022.jpg" alt="JuveYell" width="900px"height="450px">
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/inter_2022_2.JPG" alt="JuveYell" width="900px"height="450px">
 </p>
 </div>
 
@@ -1107,16 +1106,12 @@ map %>% hideGroup ("Alcance geográfico:TEVU para 2023")%>%
 
 <div>
 <p style = 'text-align:center;'>
-</p>
-</p>
-</p>
-</p>
-</p>
-</p>
-<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="250px">
+<br>
+<br>
+<br>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="200px">
 </p>
 </div>
-
 
 
 ###  Acciones que se realizaran en el territorio para el año 2023, proyecto TEVU
@@ -1204,13 +1199,10 @@ addCircleMarkers (
 
 <div>
 <p style = 'text-align:center;'>
-</p>
-</p>
-</p>
-</p>
-</p>
-</p>
-<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="250px">
+<br>
+<br>
+<br>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="200px">
 </p>
 </div>
 
@@ -1225,21 +1217,17 @@ addCircleMarkers (
 </p>
 </p>
 </p>
-<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/inter_2023.jpg" alt="JuveYell" width="900px"height="450px">
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/inter_2023_2.JPG" alt="JuveYell" width="900px"height="450px">
 </p>
 </div>
 ***
 
 <div>
 <p style = 'text-align:center;'>
-</p>
-</p>
-</p>
-</p>
-</p>
-</p>
-<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="250px">
+<br>
+<br>
+<br>
+<img src="https://francini-ap.github.io/datos_impactos_territorio_tevu/logos_tevu.png" alt="JuveYell" width="200px">
 </p>
 </div>
-
 
